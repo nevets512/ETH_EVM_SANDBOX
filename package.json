@@ -5,11 +5,11 @@
   "dependencies": {
     "@ethersproject/address": "^5.7.0",
     "csv-parser": "^3.0.0",
+    "dotenv": "^16.0.3",
     "ethereum-block-by-date": "^1.4.6",
     "ethers": "^5.7.2",
     "ethers-contracts": "^2.2.1",
-    "fs": "^0.0.1-security",
-    "dotenv": "^16.0.0"
+    "fs": "^0.0.1-security"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",

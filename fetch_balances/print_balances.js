@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const ethers = require('ethers');
 const csv = require('csv-parser');
 const fs = require('fs');
@@ -55,7 +57,7 @@ async function main() {
     .on('end', async () => {
       console.log(`Retrieving balances for ${addresses.length} addresses...`);
 
-      const provider = new ethers.providers.InfuraProvider('mainnet');
+      const provider = new ethers.providers.StaticJsonRpcProvider(`https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`);
       const tokenBalances = await getTokenBalancesAtBlock(addresses, 13916166, provider);
 
       const csvData = ['address,tether,usdc,eth,ftm,matic,link,sand,mana'].concat(
