@@ -65,8 +65,8 @@ async function main() {
           `${address},${balances.tether},${balances.usdc},${balances.eth},${balances.ftm},${balances.matic},${balances.link},${balances.sand},${balances.mana}`)
       );
 
-      fs.writeFileSync('data/balances.csv', csvData.join('\n'));
-      console.log('The balances have been written to balances.csv');
+      fs.writeFileSync('data/ETH_Mainnet_Balances.csv', csvData.join('\n'));
+      console.log('The balances have been written to ETH_Mainnet_Balances.csv');
     });
 }
 
