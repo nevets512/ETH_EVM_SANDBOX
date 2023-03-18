@@ -6,6 +6,7 @@ const fs = require('fs');
 const config = require('../config.json');
 const { createContractInstance } = require('./contracts');
 const { formatTokenBalance, formatEtherBalance } = require('./utils');
+const getBlockNumber = require('./getBlocknumber');
 
 async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
   const contracts = {
@@ -58,7 +59,10 @@ async function main() {
       console.log(`Retrieving balances for ${addresses.length} addresses...`);
 
       const provider = new ethers.providers.StaticJsonRpcProvider(`https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`);
-      const tokenBalances = await getTokenBalancesAtBlock(addresses, 13916166, provider);
+      const blockInfo = await getBlockNumber();
+      const blockNumber = blockInfo.block;      
+            
+      const tokenBalances = await getTokenBalancesAtBlock(addresses, blockNumber, provider);
 
       const csvData = ['address,tether,usdc,eth,ftm,matic,link,sand,mana'].concat(
         Object.entries(tokenBalances).map(([address, balances]) =>
