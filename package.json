@@ -1,14 +1,21 @@
 {
+  "name": "eth-evm-sandbox",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@ethersproject/address": "^5.7.0",
     "csv-parser": "^3.0.0",
     "ethereum-block-by-date": "^1.4.6",
     "ethers": "^5.7.2",
     "ethers-contracts": "^2.2.1",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "dotenv": "^16.0.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "chai": "^4.3.6",
+    "ethers": "^5.5.4",
     "hardhat": "^2.13.0"
   }
 }
