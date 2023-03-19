@@ -17,6 +17,39 @@ async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
     link: createContractInstance(config.tokens.link, provider),
     sand: createContractInstance(config.tokens.sand, provider),
     mana: createContractInstance(config.tokens.mana, provider),
+    axs: createContractInstance(config.tokens.axs, provider),
+    oneINCH: createContractInstance(config.tokens.oneINCH, provider),
+    AAVE: createContractInstance(config.tokens.AAVE, provider),
+    ALPHA: createContractInstance(config.tokens.ALPHA, provider),
+    APE: createContractInstance(config.tokens.APE, provider),
+    BAT: createContractInstance(config.tokens.BAT, provider),
+    CHZ: createContractInstance(config.tokens.CHZ, provider),
+    COMP: createContractInstance(config.tokens.COMP, provider),
+    CRO: createContractInstance(config.tokens.CRO, provider),
+    CRV: createContractInstance(config.tokens.CRV, provider),
+    CVX: createContractInstance(config.tokens.CVX, provider),
+    DAI: createContractInstance(config.tokens.DAI, provider),
+    DYDX: createContractInstance(config.tokens.DYDX, provider),
+    ENJ: createContractInstance(config.tokens.ENJ, provider),
+    ENS: createContractInstance(config.tokens.ENS, provider),
+    GALA: createContractInstance(config.tokens.GALA, provider),
+    GLM: createContractInstance(config.tokens.GLM, provider),
+    GRT: createContractInstance(config.tokens.GRT, provider),
+    GT: createContractInstance(config.tokens.GT, provider),
+    ILV: createContractInstance(config.tokens.ILV, provider),
+    IMX: createContractInstance(config.tokens.IMX, provider),
+    KUB: createContractInstance(config.tokens.KUB, provider),
+    LDO: createContractInstance(config.tokens.LDO, provider),
+    LRC: createContractInstance(config.tokens.LRC, provider),
+    MKR: createContractInstance(config.tokens.MKR, provider),
+    OCEAN: createContractInstance(config.tokens.OCEAN, provider),
+    OMG: createContractInstance(config.tokens.OMG, provider),
+    SNT: createContractInstance(config.tokens.SNT, provider),
+    SNX: createContractInstance(config.tokens.SNX, provider),
+    SUSHI: createContractInstance(config.tokens.SUSHI, provider),
+    UNI: createContractInstance(config.tokens.UNI, provider),
+    YFI: createContractInstance(config.tokens.YFI, provider),
+    ZRX: createContractInstance(config.tokens.ZRX, provider)
   };
 
   const tokenBalances = {};
@@ -64,9 +97,9 @@ async function main() {
             
       const tokenBalances = await getTokenBalancesAtBlock(addresses, blockNumber, provider);
 
-      const csvData = ['address,tether,usdc,eth,ftm,matic,link,sand,mana'].concat(
+      const csvData = ['address,tether,usdc,eth,ftm,matic,link,sand,mana,axs,oneINCH,AAVE,ALPHA,APE,BAT,CHZ,COMP,CRO,CRV,CVX,DAI,DYDX,ENJ,ENS,GALA,GLM,GRT,GT,ILV,IMX,KUB,LDO,LRC,MKR,OCEAN,OMG,SNT,SNX,SUSHI,UNI,YFI,ZRX'].concat(
         Object.entries(tokenBalances).map(([address, balances]) =>
-          `${address},${balances.tether},${balances.usdc},${balances.eth},${balances.ftm},${balances.matic},${balances.link},${balances.sand},${balances.mana}`)
+          `${address},${balances.tether},${balances.usdc},${balances.eth},${balances.ftm},${balances.matic},${balances.link},${balances.sand},${balances.mana},${balances.axs},${balances.oneINCH},${balances.AAVE},${balances.ALPHA},${balances.APE},${balances.BAT},${balances.CHZ},${balances.COMP},${balances.CRO},${balances.CRV},${balances.CVX},${balances.DAI},${balances.DYDX},${balances.ENJ},${balances.ENS},${balances.GALA},${balances.GLM},${balances.GRT},${balances.GT},${balances.ILV},${balances.IMX},${balances.KUB},${balances.LDO},${balances.LRC},${balances.MKR},${balances.OCEAN},${balances.OMG},${balances.SNT},${balances.SNX},${balances.SUSHI},${balances.UNI},${balances.YFI},${balances.ZRX}`)
       );
 
       fs.writeFileSync('data/ETH_Mainnet_Balances.csv', csvData.join('\n'));
