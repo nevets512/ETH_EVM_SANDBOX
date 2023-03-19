@@ -6,7 +6,7 @@ const provider = new ethers.providers.JsonRpcProvider(rpcURL)
 const dater = new EthDater(provider)
 
 const main = async () => {
-  let block = await dater.getDate('2022-12-31T17:00:00Z');
+  let block = await dater.getDate('2022-12-31T16:59:59Z');
   console.log(block)
 }
 
