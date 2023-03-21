@@ -10,15 +10,15 @@ const getBlockNumber = require('./getBlocknumber');
 
 async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
   const contracts = {
-    tether: createContractInstance(config.tokens.tether, provider),
-    usdc: createContractInstance(config.tokens.usdc, provider),
-    ftm: createContractInstance(config.tokens.ftm, provider),
-    matic: createContractInstance(config.tokens.matic, provider),
-    link: createContractInstance(config.tokens.link, provider),
-    sand: createContractInstance(config.tokens.sand, provider),
-    mana: createContractInstance(config.tokens.mana, provider),
-    axs: createContractInstance(config.tokens.axs, provider),
-    oneINCH: createContractInstance(config.tokens.oneINCH, provider),
+    USDT: createContractInstance(config.tokens.USDT, provider),
+    USDC: createContractInstance(config.tokens.USDC, provider),
+    FTM: createContractInstance(config.tokens.FTM, provider),
+    MATIC: createContractInstance(config.tokens.MATIC, provider),
+    LINK: createContractInstance(config.tokens.LINK, provider),
+    SAND: createContractInstance(config.tokens.SAND, provider),
+    MANA: createContractInstance(config.tokens.MANA, provider),
+    AXS: createContractInstance(config.tokens.AXS, provider),
+    ONE_INCH: createContractInstance(config.tokens.ONE_INCH, provider),
     AAVE: createContractInstance(config.tokens.AAVE, provider),
     ALPHA: createContractInstance(config.tokens.ALPHA, provider),
     APE: createContractInstance(config.tokens.APE, provider),
@@ -49,6 +49,16 @@ async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
     SUSHI: createContractInstance(config.tokens.SUSHI, provider),
     UNI: createContractInstance(config.tokens.UNI, provider),
     YFI: createContractInstance(config.tokens.YFI, provider),
+    ABT: createContractInstance(config.tokens.ABT, provider),
+    AXL: createContractInstance(config.tokens.AXL, provider),
+    BAL: createContractInstance(config.tokens.BAL, provider),
+    BOBA: createContractInstance(config.tokens.BOBA, provider),
+    CVC: createContractInstance(config.tokens.CVC, provider),
+    DOGE: createContractInstance(config.tokens.DOGE, provider),
+    EVX: createContractInstance(config.tokens.EVX, provider),
+    FTT: createContractInstance(config.tokens.FTT, provider),
+    GAL: createContractInstance(config.tokens.GAL, provider),
+    GF: createContractInstance(config.tokens.GF, provider),
     ZRX: createContractInstance(config.tokens.ZRX, provider)
   };
 
@@ -68,10 +78,10 @@ async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
     tokenBalances[address] = balances.reduce((acc, curr, index) => {
       if (index < balances.length - 1) {
         const { token, balance } = curr;
-        const decimals = token === 'tether' || token === 'usdc' ? 6 : 18;
+        const decimals = token === 'USDT' || token === 'USDC' ? 6 : 18;
         acc[token] = formatTokenBalance(balance, decimals);
       } else {
-        acc.eth = formatEtherBalance(curr);
+        acc.ETH = formatEtherBalance(curr);
       }
       return acc;
     }, {});
@@ -97,9 +107,9 @@ async function main() {
             
       const tokenBalances = await getTokenBalancesAtBlock(addresses, blockNumber, provider);
 
-      const csvData = ['address,tether,usdc,eth,ftm,matic,link,sand,mana,axs,oneINCH,AAVE,ALPHA,APE,BAT,CHZ,COMP,CRO,CRV,CVX,DAI,DYDX,ENJ,ENS,GALA,GLM,GRT,GT,ILV,IMX,KUB,LDO,LRC,MKR,OCEAN,OMG,SNT,SNX,SUSHI,UNI,YFI,ZRX'].concat(
+      const csvData = ['address,USDT,USDC,ETH,FTM,MATIC,LINK,SAND,MANA,AXS,ONE_INCH,AAVE,ALPHA,APE,BAT,CHZ,COMP,CRO,CRV,CVX,DAI,DYDX,ENJ,ENS,GALA,GLM,GRT,GT,ILV,IMX,KUB,LDO,LRC,MKR,OCEAN,OMG,SNT,SNX,SUSHI,UNI,YFI,ABT,AXL,BAL,BOBA,CVC,DOGE,EVX,FTT,GAL,GF,ZRX'].concat(
         Object.entries(tokenBalances).map(([address, balances]) =>
-          `${address},${balances.tether},${balances.usdc},${balances.eth},${balances.ftm},${balances.matic},${balances.link},${balances.sand},${balances.mana},${balances.axs},${balances.oneINCH},${balances.AAVE},${balances.ALPHA},${balances.APE},${balances.BAT},${balances.CHZ},${balances.COMP},${balances.CRO},${balances.CRV},${balances.CVX},${balances.DAI},${balances.DYDX},${balances.ENJ},${balances.ENS},${balances.GALA},${balances.GLM},${balances.GRT},${balances.GT},${balances.ILV},${balances.IMX},${balances.KUB},${balances.LDO},${balances.LRC},${balances.MKR},${balances.OCEAN},${balances.OMG},${balances.SNT},${balances.SNX},${balances.SUSHI},${balances.UNI},${balances.YFI},${balances.ZRX}`)
+          `${address},${balances.USDT},${balances.USDC},${balances.ETH},${balances.FTM},${balances.MATIC},${balances.LINK},${balances.SAND},${balances.MANA},${balances.AXS},${balances.ONE_INCH},${balances.AAVE},${balances.ALPHA},${balances.APE},${balances.BAT},${balances.CHZ},${balances.COMP},${balances.CRO},${balances.CRV},${balances.CVX},${balances.DAI},${balances.DYDX},${balances.ENJ},${balances.ENS},${balances.GALA},${balances.GLM},${balances.GRT},${balances.GT},${balances.ILV},${balances.IMX},${balances.KUB},${balances.LDO},${balances.LRC},${balances.MKR},${balances.OCEAN},${balances.OMG},${balances.SNT},${balances.SNX},${balances.SUSHI},${balances.UNI},${balances.YFI},${balances.ABT},${balances.AXL},${balances.BAL},${balances.BOBA},${balances.CVC},${balances.DOGE},${balances.EVX},${balances.FTT},${balances.GAL},${balances.GF},${balances.ZRX}`)
       );
 
       fs.writeFileSync('data/ETH_Mainnet_Balances.csv', csvData.join('\n'));
