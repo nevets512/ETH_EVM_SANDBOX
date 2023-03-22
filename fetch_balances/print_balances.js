@@ -59,7 +59,17 @@ async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
     FTT: createContractInstance(config.tokens.FTT, provider),
     GAL: createContractInstance(config.tokens.GAL, provider),
     GF: createContractInstance(config.tokens.GF, provider),
-    ZRX: createContractInstance(config.tokens.ZRX, provider)
+    GHST: createContractInstance(config.tokens.GHST, provider),
+    GODS: createContractInstance(config.tokens.GODS, provider),
+    KNC2: createContractInstance(config.tokens.KNC2, provider),
+    LYXE: createContractInstance(config.tokens.LYXE, provider),
+    POWR: createContractInstance(config.tokens.POWR, provider),
+    RDN: createContractInstance(config.tokens.RDN, provider),
+    STG: createContractInstance(config.tokens.STG, provider),
+    XRP: createContractInstance(config.tokens.XRP, provider),
+    YGG: createContractInstance(config.tokens.YGG, provider),
+    ZRX: createContractInstance(config.tokens.ZRX, provider),
+    JFIN: createContractInstance(config.tokens.JFIN, provider)
   };
 
   const tokenBalances = {};
@@ -107,9 +117,9 @@ async function main() {
             
       const tokenBalances = await getTokenBalancesAtBlock(addresses, blockNumber, provider);
 
-      const csvData = ['address,USDT,USDC,ETH,FTM,MATIC,LINK,SAND,MANA,AXS,ONE_INCH,AAVE,ALPHA,APE,BAT,CHZ,COMP,CRO,CRV,CVX,DAI,DYDX,ENJ,ENS,GALA,GLM,GRT,GT,ILV,IMX,KUB,LDO,LRC,MKR,OCEAN,OMG,SNT,SNX,SUSHI,UNI,YFI,ABT,AXL,BAL,BOBA,CVC,DOGE,EVX,FTT,GAL,GF,ZRX'].concat(
+      const csvData = ['address,USDT,USDC,ETH,FTM,MATIC,LINK,SAND,MANA,AXS,ONE_INCH,AAVE,ALPHA,APE,BAT,CHZ,COMP,CRO,CRV,CVX,DAI,DYDX,ENJ,ENS,GALA,GLM,GRT,GT,ILV,IMX,KUB,LDO,LRC,MKR,OCEAN,OMG,SNT,SNX,SUSHI,UNI,YFI,ABT,AXL,BAL,BOBA,CVC,DOGE,EVX,FTT,GAL,GF,GHST,GODS,KNC2,LYXE,POWR,RDN,STG,XRP,YGG,ZRX'].concat(
         Object.entries(tokenBalances).map(([address, balances]) =>
-          `${address},${balances.USDT},${balances.USDC},${balances.ETH},${balances.FTM},${balances.MATIC},${balances.LINK},${balances.SAND},${balances.MANA},${balances.AXS},${balances.ONE_INCH},${balances.AAVE},${balances.ALPHA},${balances.APE},${balances.BAT},${balances.CHZ},${balances.COMP},${balances.CRO},${balances.CRV},${balances.CVX},${balances.DAI},${balances.DYDX},${balances.ENJ},${balances.ENS},${balances.GALA},${balances.GLM},${balances.GRT},${balances.GT},${balances.ILV},${balances.IMX},${balances.KUB},${balances.LDO},${balances.LRC},${balances.MKR},${balances.OCEAN},${balances.OMG},${balances.SNT},${balances.SNX},${balances.SUSHI},${balances.UNI},${balances.YFI},${balances.ABT},${balances.AXL},${balances.BAL},${balances.BOBA},${balances.CVC},${balances.DOGE},${balances.EVX},${balances.FTT},${balances.GAL},${balances.GF},${balances.ZRX}`)
+          `${address},${balances.USDT},${balances.USDC},${balances.ETH},${balances.FTM},${balances.MATIC},${balances.LINK},${balances.SAND},${balances.MANA},${balances.AXS},${balances.ONE_INCH},${balances.AAVE},${balances.ALPHA},${balances.APE},${balances.BAT},${balances.CHZ},${balances.COMP},${balances.CRO},${balances.CRV},${balances.CVX},${balances.DAI},${balances.DYDX},${balances.ENJ},${balances.ENS},${balances.GALA},${balances.GLM},${balances.GRT},${balances.GT},${balances.ILV},${balances.IMX},${balances.KUB},${balances.LDO},${balances.LRC},${balances.MKR},${balances.OCEAN},${balances.OMG},${balances.SNT},${balances.SNX},${balances.SUSHI},${balances.UNI},${balances.YFI},${balances.ABT},${balances.AXL},${balances.BAL},${balances.BOBA},${balances.CVC},${balances.DOGE},${balances.EVX},${balances.FTT},${balances.GAL},${balances.GF},${balances.GHST},${balances.GODS},${balances.KNC2},${balances.LYXE},${balances.POWR},${balances.RDN},${balances.STG},${balances.XRP},${balances.YGG}${balances.ZRX},${balances.JFIN}`)
       );
 
       fs.writeFileSync('data/ETH_Mainnet_Balances.csv', csvData.join('\n'));
