@@ -7,8 +7,18 @@ const config = require('../config.json');
 const { createContractInstance } = require('./contracts');
 const { formatTokenBalance, formatEtherBalance } = require('./utils');
 const getBlockNumber = require('./getBlocknumber');
+const ProgressBar = require('progress');
 
 async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
+
+  const bar = new ProgressBar('Processing [:bar] :percent :etas', {
+    total: addresses.length,
+    width: 30,
+    complete: '=',
+    incomplete: ' ',
+    renderThrottle: 100,
+  });
+
   const contracts = {
     USDT: createContractInstance(config.tokens.USDT, provider),
     USDC: createContractInstance(config.tokens.USDC, provider),
@@ -66,7 +76,6 @@ async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
     POWR: createContractInstance(config.tokens.POWR, provider),
     RDN: createContractInstance(config.tokens.RDN, provider),
     STG: createContractInstance(config.tokens.STG, provider),
-    XRP: createContractInstance(config.tokens.XRP, provider),
     YGG: createContractInstance(config.tokens.YGG, provider),
     ZRX: createContractInstance(config.tokens.ZRX, provider),
     JFIN: createContractInstance(config.tokens.JFIN, provider)
@@ -77,7 +86,7 @@ async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
   for (const address of addresses) {
     const balancePromises = [
       ...Object.entries(contracts).map(async ([token, contract]) => {
-        const balance = await contract.balanceOf(address).then((b) => b.toString());
+        const balance = await contract.balanceOf(address, { blockTag: blockHeight }).then((b) => b.toString());
         return { token, balance };
       }),
       provider.getBalance(address, blockHeight).then((b) => b.toString()),
@@ -95,6 +104,9 @@ async function getTokenBalancesAtBlock(addresses, blockHeight, provider) {
       }
       return acc;
     }, {});
+
+    // Update the progress bar
+    bar.tick();
   }
 
   return tokenBalances;
@@ -117,9 +129,9 @@ async function main() {
             
       const tokenBalances = await getTokenBalancesAtBlock(addresses, blockNumber, provider);
 
-      const csvData = ['address,USDT,USDC,ETH,FTM,MATIC,LINK,SAND,MANA,AXS,ONE_INCH,AAVE,ALPHA,APE,BAT,CHZ,COMP,CRO,CRV,CVX,DAI,DYDX,ENJ,ENS,GALA,GLM,GRT,GT,ILV,IMX,KUB,LDO,LRC,MKR,OCEAN,OMG,SNT,SNX,SUSHI,UNI,YFI,ABT,AXL,BAL,BOBA,CVC,DOGE,EVX,FTT,GAL,GF,GHST,GODS,KNC2,LYXE,POWR,RDN,STG,XRP,YGG,ZRX'].concat(
+      const csvData = ['address,USDT,USDC,ETH,FTM,MATIC,LINK,SAND,MANA,AXS,ONE_INCH,AAVE,ALPHA,APE,BAT,CHZ,COMP,CRO,CRV,CVX,DAI,DYDX,ENJ,ENS,GALA,GLM,GRT,GT,ILV,IMX,KUB,LDO,LRC,MKR,OCEAN,OMG,SNT,SNX,SUSHI,UNI,YFI,ABT,AXL,BAL,BOBA,CVC,DOGE,EVX,FTT,GAL,GF,GHST,GODS,KNC2,LYXE,POWR,RDN,STG,YGG,ZRX,JFIN'].concat(
         Object.entries(tokenBalances).map(([address, balances]) =>
-          `${address},${balances.USDT},${balances.USDC},${balances.ETH},${balances.FTM},${balances.MATIC},${balances.LINK},${balances.SAND},${balances.MANA},${balances.AXS},${balances.ONE_INCH},${balances.AAVE},${balances.ALPHA},${balances.APE},${balances.BAT},${balances.CHZ},${balances.COMP},${balances.CRO},${balances.CRV},${balances.CVX},${balances.DAI},${balances.DYDX},${balances.ENJ},${balances.ENS},${balances.GALA},${balances.GLM},${balances.GRT},${balances.GT},${balances.ILV},${balances.IMX},${balances.KUB},${balances.LDO},${balances.LRC},${balances.MKR},${balances.OCEAN},${balances.OMG},${balances.SNT},${balances.SNX},${balances.SUSHI},${balances.UNI},${balances.YFI},${balances.ABT},${balances.AXL},${balances.BAL},${balances.BOBA},${balances.CVC},${balances.DOGE},${balances.EVX},${balances.FTT},${balances.GAL},${balances.GF},${balances.GHST},${balances.GODS},${balances.KNC2},${balances.LYXE},${balances.POWR},${balances.RDN},${balances.STG},${balances.XRP},${balances.YGG}${balances.ZRX},${balances.JFIN}`)
+          `${address},${balances.USDT},${balances.USDC},${balances.ETH},${balances.FTM},${balances.MATIC},${balances.LINK},${balances.SAND},${balances.MANA},${balances.AXS},${balances.ONE_INCH},${balances.AAVE},${balances.ALPHA},${balances.APE},${balances.BAT},${balances.CHZ},${balances.COMP},${balances.CRO},${balances.CRV},${balances.CVX},${balances.DAI},${balances.DYDX},${balances.ENJ},${balances.ENS},${balances.GALA},${balances.GLM},${balances.GRT},${balances.GT},${balances.ILV},${balances.IMX},${balances.KUB},${balances.LDO},${balances.LRC},${balances.MKR},${balances.OCEAN},${balances.OMG},${balances.SNT},${balances.SNX},${balances.SUSHI},${balances.UNI},${balances.YFI},${balances.ABT},${balances.AXL},${balances.BAL},${balances.BOBA},${balances.CVC},${balances.DOGE},${balances.EVX},${balances.FTT},${balances.GAL},${balances.GF},${balances.GHST},${balances.GODS},${balances.KNC2},${balances.LYXE},${balances.POWR},${balances.RDN},${balances.STG},${balances.YGG}${balances.ZRX},${balances.JFIN}`)
       );
 
       fs.writeFileSync('data/ETH_Mainnet_Balances.csv', csvData.join('\n'));

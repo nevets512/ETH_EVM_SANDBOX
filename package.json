@@ -9,7 +9,8 @@
     "ethereum-block-by-date": "^1.4.6",
     "ethers": "^5.7.2",
     "ethers-contracts": "^2.2.1",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "progress": "^2.0.3"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
